@@ -1,24 +1,31 @@
 import logo from './logo.svg';
 import './App.css';
+import MyRoute from './MyRoute';
+import { Provider } from 'react-redux';
+import { combineReducers, createStore } from 'redux';
+import CountReducer from './reducer/count.reducer';
+import gameReducer from './reducer/game.reducer';
+import ItemReducer from './reducer/item.reducer';
+import CartReducer from './reducer/cart.reducer';
 
 function App() {
+  // const store = createStore(CountReducer)
+  // const store = createStore(gameReducer)
+  const combinedStore = combineReducers({
+    count: CountReducer,
+    game: gameReducer,
+    item: ItemReducer,
+    cart: CartReducer
+  })
+
+  const store = createStore(combinedStore)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Provider store={store}>
+        <MyRoute />
+      </Provider>
+    </>
   );
 }
 
